@@ -1,0 +1,23 @@
+name: csv-analyzer
+description: 分析 CSV 文件，输出行数、列名和空值统计
+version: 1.0.0
+author: zhoutom40-star
+language: python
+entry: main.py
+
+inputs:
+  - name: file_path
+    type: string
+    description: CSV 文件路径
+    required: true
+
+outputs:
+  - name: row_count
+    type: integer
+    description: 总行数
+  - name: columns
+    type: list
+    description: 列名列表
+  - name: empty_counts
+    type: dict
+    description: 每列空值数量

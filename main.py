@@ -1,5 +1,6 @@
 import csv
 import sys
+import json
 from collections import Counter
 
 def analyze_csv(file_path):
@@ -7,18 +8,20 @@ def analyze_csv(file_path):
         reader = csv.DictReader(f)
         rows = list(reader)
 
-    print("总行数:", len(rows))
-    print("列名:", reader.fieldnames)
-
     empty_count = Counter()
     for row in rows:
         for key, value in row.items():
             if value is None or value.strip() == "":
                 empty_count[key] += 1
 
-    print("空值统计:")
-    for col in reader.fieldnames:
-        print(f"  {col}: {empty_count[col]}")
+    result = {
+        "row_count": len(rows),
+        "columns": reader.fieldnames,
+        "empty_counts": dict(empty_count)
+    }
+
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return result
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
